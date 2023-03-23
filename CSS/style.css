@@ -43,7 +43,7 @@ body {
     box-shadow:  0 0 15px 4px rgba(245, 117, 12, 0.2); 
     cursor: pointer;
     position: relative;
-    top: 318px;
+    top: 50%;
     transition: background 0.2s linear;
 }
 
