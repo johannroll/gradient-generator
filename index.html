@@ -5,16 +5,67 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="CSS/style.css">
+        
         <title>GradGen</title>
+        <script src="https://kit.fontawesome.com/64a1b01fa3.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <section class="block">
-            <div class="container">
-                <button id="btn">
-                    Generate Gradient
-                </button>
+    <section>
+        <div class="palette-container">
+            <div>
+                <h1 id="palette-heading">Color Palette</h1>
             </div>
-        </section>
-        <script type="text/javascript" src="static/script.js" defer></script>
+            <div class="color-name-wrapper">
+                <input id="all-colors" type="text" placeholder="Color Name" autocomplete="off">
+            </div>
+            <div>
+                <p class="or">Or Value</p>
+            </div>
+            <div class="colorcode-input-search">
+                <!-- <label for="color">Search Color</label> -->
+                <div id="info-icon1" class="info-icon" title="This is an info box">i<div class="info-box">Select the color code format to search.</div></div>
+                <select name="colorCode" id="colorCode">
+                    <option value="hex" selected>hex</option>
+                    <option value="rgb">rgb</option>
+                    <option value="rgba">rgba</option>
+                    <option value="cmyk">cmyk</option>
+                    <option value="hsl">hsl</option>
+                </select>
+                <input id="input-search" type="text" placeholder=" ">
+                <button id="btn-search">Search</button>
+            </div>
+            <div class="colors">
+                
+            </div>
+            <div>
+                <h2 class="or2">Import Image</h2>
+            </div>
+            <div class="imageMatch-grid">
+                <form action="#">
+                    <label for="file-input" class="custom-image-upload">Choose File</label>
+                    <input type="file" id="file-input" value="file" />
+                    <input type="button" id="btnLoad" value="Load" onclick="loadClick();"/>
+                </form>
+                <div class="imageSize">
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div class="imagePalette-container">
+                    <div id="palette"></div>
+                    <!-- <hr /> -->
+                    <div id="complementary"></div>
+                </div>
+                <div class="gradients"></div>
+            </div>
+        </div>
+    </section>
+    <!-- <section class="block">
+        <div class="container">
+            <button id="btn">
+                Generate Gradient
+            </button>
+        </div>
+    </section> -->
+        <script src="./static/script.js" defer></script>
+       
     </body>
 </html>
