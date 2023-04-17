@@ -5,7 +5,8 @@
     box-sizing: border-box;
 }
 
-select {
+
+select, textarea, input {
     touch-action: manipulation;
     -webkit-appearance: none;
     -moz-appearance: none;
