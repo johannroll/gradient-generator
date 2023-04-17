@@ -13,6 +13,37 @@ document.querySelector('input[type="file"]').onchange = function() {
     document.querySelector('form').appendChild(fileDiv);
 }
 
+function isTouchDevice() {
+  return ('ontouchstart' in window || navigator.maxTouchPoints);
+}
+
+// Show pop-up on mouseover for desktop, tap for mobile
+document.querySelector('.info-icon').addEventListener('mouseover', function() {
+  if (!isTouchDevice()) {
+    document.querySelector('.info-box').style.display = 'block';
+  }
+});
+
+document.querySelector('.info-icon').addEventListener('click', function() {
+  if (isTouchDevice()) {
+    document.querySelector('.info-box').style.display = 'block';
+  }
+});
+
+// Hide pop-up on mouseout for desktop, tap outside for mobile
+document.addEventListener('mouseout', function(event) {
+  if (!event.relatedTarget || (event.relatedTarget && event.relatedTarget.className !== 'info-box')) {
+    document.querySelector('.info-box').style.display = 'none';
+  }
+});
+
+document.addEventListener('click', function(event) {
+  if (isTouchDevice() && event.target.className !== 'info-icon' && event.target.className !== 'info-box') {
+    document.querySelector('.info-box').style.display = 'none';
+  }
+});
+
+
 const buildPalette = (colorsList) => {
     const paletteContainer = document.getElementById("palette");
     const complementaryContainer = document.getElementById("complementary");
@@ -506,7 +537,7 @@ const colors = document.querySelector('.colors');
 
 btnSearch.addEventListener('click', function () {
     getColor();
-    gradients();   
+    gradients();
     const palleteAdd = btnSearch;
 });
 
@@ -582,15 +613,15 @@ function getColor() {
     divColor.innerHTML= ` 
     <p style="text-align: center">${colorSearch.seed[colorCode].value}</p>`;
     divColor.onclick = () => {
-        const textToCopy = divColor.innerText;
-        console.log(textToCopy);
-        const tempInput = document.createElement('textarea');
-        tempInput.value = textToCopy;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-      }
+      const textToCopy = divColor.innerText;
+      console.log(textToCopy);
+      const tempInput = document.createElement('textarea');
+      tempInput.value = textToCopy;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+    }
     
     divColor.insertAdjacentElement("afterend",schemaSelect);
     divColor.insertAdjacentElement("afterend",labelDiv);
@@ -599,13 +630,15 @@ function getColor() {
     labelDiv.appendChild(schemaLabel);
     
     iconWrapper.innerText = "i";
-    iconWrapper.style.cssText = 'display: inline-block; position: relative; top:';
+    iconWrapper.style.cssText = 'display: inline-block; position: relative';
     
     
     iconWrapper.insertAdjacentElement("afterbegin", icon);
     icon.innerText = "Select the color code format to search."
     icon.style.cssText = 'min-width: 200px';
-    
+    icon.onmouseenter = function () {
+      isTouchDevice();
+    }   
     
     schemaSelect.innerHTML= '<option value="default" disabled selected>Choose Color Schema</option><option value="complement">Complement</option><option value="analogic-complement">Analogic-complement</option><option value="analogic">Analogic</option><option value="triad">Triad</option><option value="quad">Quad</option><option value="monochrome">Monochrome</option><option value="monochrome-dark">Monochrome-dark</option><option value="monochrome-light">Monochrome-light</option>';
     schemaLabel.innerText = 'Color Schema: ';
@@ -849,7 +882,7 @@ document.addEventListener('copy', copiedToClipboard);
   function copiedToClipboard () {
   const popup = document.createElement('div');
   popup.classList.add('popup');
-  popup.innerText = 'Copied to clipboard!';
+  popup.innerText = 'Copied!';
 
   // Add the pop-up element to the page
   document.body.appendChild(popup);
@@ -866,16 +899,16 @@ function gradients () {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
-  parent.style.cssText = 'display:flex; flex-direction:column; align-items:center; width: 100%; max-width: 1200px;';
+  parent.style.cssText = 'display:flex; flex-direction:column; align-items: center; width: 100%; max-width: 1200px;';
   const gradHeading = document.createElement('h2');
   gradHeading.innerText = "Gradient";
-  gradHeading.style.cssText = 'margin-top: 1rem';
+  gradHeading.style.cssText = 'margin-top: 1rem; margin-bottom: 0.5rem;';
   parent.appendChild(gradHeading);
   
   const gradientType = document.createElement('select');
   gradientType.innerHTML = '<option value="gradient-type" selected disabled>Gradient Type</option><option value="linear-gradient">Linear Gradient</option><option value="radial-gradient">Radial Gradient</option><option value="conic-gradient">Conic Gradient</option>';
-  gradientType.style.cssText = 'display: inline;margin: 0.5rem 0 0rem';
-  gradientType.setAttribute('id', "colorCode");
+  gradientType.style.cssText = 'margin: 0.5rem 0 0, min-width: 200px';
+  gradientType.setAttribute('id','btn-search');
   parent.appendChild(gradientType);
   
   const selectColors = document.createElement('button');
@@ -901,16 +934,24 @@ function gradients () {
     gradientType.addEventListener('change', function () {
       
       selectedColors.length = 0;
+      document.removeEventListener('copy', copiedToClipboard);
       gradientColorSelect();
         
     });
 
     function gradientColorSelect () {
-        document.removeEventListener('copy', copiedToClipboard);
       
-        document.addEventListener('copy', function () {
-          
-          const selectedContent = window.getSelection().toString();
+      document.addEventListener('dblclick', function (event) { 
+     
+          const selectedContent = event.target.innerText;
+          console.log(selectedContent);
+
+          // if (window.getSelection) {
+          // selectedContent = window.getSelection().toString();
+          // } else if (document.selection && document.selection.type !== 'Control') {
+          //   selectedContent = document.selection.createRange().text;
+          // }
+          // selectedContent = window.getSelection().toString();
           console.log('Selected content: ' + selectedContent);
          
           const popup = document.createElement('div');
@@ -937,10 +978,10 @@ function gradients () {
     popup.remove();
     }, 1500);
    
-        
-    });
-       
-       
+  });
+   
+    
+    
   };
     
 
@@ -956,6 +997,7 @@ function gradients () {
     const gradientContainer = document.createElement('div');
     generateGradient.addEventListener('click', selectedColorsFunction);
     function selectedColorsFunction () {
+        document.addEventListener('copy', copiedToClipboard); 
         console.log(selectedColors.length);
 
         if (selectedColors.length === 1 || selectedColors.length === 0) {
@@ -1075,15 +1117,21 @@ function gradients () {
             
           };
           selectedColors.length = 0; 
+         
         }
 
         
         function randomGradient(mergedArray)  { 
+          const parent = document.querySelector('.imageMatch-grid');
+          const child = document.querySelector('.randomGrad-container');
+          while (parent.lastChild === child) {
+            parent.removeChild(child);
+          }
           const imageColorArray = mergedArray;
           console.log(imageColorArray);
           const MaxGradietns = 30;
           
-         
+          
           const randomGradientArray = [];
           
           const randomGradientDiv = document.createElement('div');
@@ -1157,7 +1205,49 @@ function gradients () {
               const randomColor2 = imageColorArray[randomIndex2];
               const randomColor3 = imageColorArray[randomIndex3];
               
-              randomGradientArray.push(`${randomGenerate.value}(${randomColor1}, ${randomColor2}, ${randomColor3})`);
+              if (randomIndex1 === randomIndex2) {
+                const randomIndex1 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex2 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex3 = Math.floor(Math.random() * imageColorArray.length);
+                const randomColor1 = imageColorArray[randomIndex1];
+                const randomColor2 = imageColorArray[randomIndex2];
+                const randomColor3 = imageColorArray[randomIndex3];
+                randomGradientArray.push(`${randomGenerate.value}(${randomColor1}, ${randomColor2}, ${randomColor3})`);
+              } else if (randomIndex1 === randomIndex3) {
+                const randomIndex1 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex2 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex3 = Math.floor(Math.random() * imageColorArray.length);
+                const randomColor1 = imageColorArray[randomIndex1];
+                const randomColor2 = imageColorArray[randomIndex2];
+                const randomColor3 = imageColorArray[randomIndex3];
+                randomGradientArray.push(`${randomGenerate.value}(${randomColor1}, ${randomColor2}, ${randomColor3})`);
+              } else if (randomIndex2 === randomIndex3) {
+                const randomIndex1 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex2 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex3 = Math.floor(Math.random() * imageColorArray.length);
+                const randomColor1 = imageColorArray[randomIndex1];
+                const randomColor2 = imageColorArray[randomIndex2];
+                const randomColor3 = imageColorArray[randomIndex3];
+                randomGradientArray.push(`${randomGenerate.value}(${randomColor1}, ${randomColor2}, ${randomColor3})`);
+              } else if (randomIndex2 === randomIndex1) {
+                const randomIndex1 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex2 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex3 = Math.floor(Math.random() * imageColorArray.length);
+                const randomColor1 = imageColorArray[randomIndex1];
+                const randomColor2 = imageColorArray[randomIndex2];
+                const randomColor3 = imageColorArray[randomIndex3];
+                randomGradientArray.push(`${randomGenerate.value}(${randomColor1}, ${randomColor2}, ${randomColor3})`);
+              } else if (randomIndex3 === randomIndex1) {
+                const randomIndex1 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex2 = Math.floor(Math.random() * imageColorArray.length);
+                const randomIndex3 = Math.floor(Math.random() * imageColorArray.length);
+                const randomColor1 = imageColorArray[randomIndex1];
+                const randomColor2 = imageColorArray[randomIndex2];
+                const randomColor3 = imageColorArray[randomIndex3];
+                randomGradientArray.push(`${randomGenerate.value}(${randomColor1}, ${randomColor2}, ${randomColor3})`);
+              } else {  
+                randomGradientArray.push(`${randomGenerate.value}(${randomColor1}, ${randomColor2}, ${randomColor3})`);
+              }
               
             }
             

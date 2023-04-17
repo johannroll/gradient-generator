@@ -24,7 +24,7 @@
             <div class="colorcode-input-search">
                 <!-- <label for="color">Search Color</label> -->
                 <div id="info-icon1" class="info-icon" title="This is an info box">i<div class="info-box">Select the color code format to search.</div></div>
-                <select name="colorCode" id="colorCode">
+                <select name="colorCode" id="colorCode" style="margin-right: 0.3rem">
                     <option value="hex" selected>hex</option>
                     <option value="rgb">rgb</option>
                     <option value="rgba">rgba</option>
@@ -34,8 +34,7 @@
                 <input id="input-search" type="text" placeholder=" ">
                 <button id="btn-search">Search</button>
             </div>
-            <div class="colors">
-                
+            <div class="colors"> 
             </div>
             <div>
                 <h2 class="or2">Import Image</h2>
@@ -46,26 +45,20 @@
                     <input type="file" id="file-input" value="file" />
                     <input type="button" id="btnLoad" value="Load" onclick="loadClick();"/>
                 </form>
-                <div class="imageSize">
-                    <canvas id="canvas"></canvas>
-                </div>
-                <div class="imagePalette-container">
-                    <div id="palette"></div>
-                    <!-- <hr /> -->
-                    <div id="complementary"></div>
+                <div class="image-gradient-container">
+                    <div class="imageSize">
+                        <canvas id="canvas"></canvas>
+                    </div>
+                    <div class="imagePalette-container">
+                        <div id="palette"></div>
+                        <!-- <hr /> -->
+                        <div id="complementary"></div>
+                    </div>
                 </div>
                 <div class="gradients"></div>
             </div>
         </div>
     </section>
-    <!-- <section class="block">
-        <div class="container">
-            <button id="btn">
-                Generate Gradient
-            </button>
-        </div>
-    </section> -->
-        <script src="./static/script.js" defer></script>
-       
+    <script src="./static/script.js" defer></script>  
     </body>
 </html>
