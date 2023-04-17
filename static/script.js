@@ -1,4 +1,11 @@
 
+const inputElements = document.querySelectorAll('input, textarea');
+inputElements.forEach(inputElement => {
+  inputElement.addEventListener('touchstart', (event) => {
+    event.stopPropagation();
+  });
+});
+
 document.querySelector('input[type="file"]').onchange = function() {
     const parent = document.querySelector('form[action="#"]');
     const oldfileDiv = document.querySelector('.fileName');
