@@ -34,7 +34,7 @@ body {
 
 #palette-heading {
     padding-bottom: 1rem;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     letter-spacing: 0.2rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -342,11 +342,21 @@ form {
         font-size: 18px;
     }
 
+    input, select, button {
+        font-size: 18px;
+    }
+
     .colorcode-input-search {
         display: flex;
         flex-direction: column;
         position: relative;
     }
+
+    #palette-heading {
+        font-weight: 500;
+        text-align: center;
+    }
+
     #input-search {
         margin-bottom: 1rem;
     }
