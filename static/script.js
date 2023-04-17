@@ -1143,7 +1143,7 @@ function gradients () {
           
           const randomGradientDiv = document.createElement('div');
           randomGradientDiv.className = 'randomGrad-container';
-          randomGradientDiv.style.cssText = 'width: 100%; max-width:1200px; display: flex; flex-direction: column; align-items: center; margin-top: 1rem';
+          randomGradientDiv.style.cssText = 'width: 100%; max-width:1200px; display: flex; flex-direction: column; align-items: center; margin-top: 1rem; text-align: center';
           randomGradientDiv.innerHTML = '<h2>Random Gradient from Image</h2>'
           const randomGradient = document.createElement('div');
           randomGradient.classList.add('random-gradient');
