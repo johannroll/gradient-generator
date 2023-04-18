@@ -454,8 +454,25 @@ fetch(`https://api.color.pizza/v1/`)
     }
    
     const suggestionList = document.createElement("ul");
-    suggestionList.style.cssText = "position: absolute; display: flex; flex-direction: column; list-style: none; ;background: rgb(75, 88, 91); margin-bottom: 0.5rem; z-index: 999; max-height:200px; min-width: 251.45px; overflow: auto; border: 1px solid #fff; padding: 0rem 0.6rem 0rem 0.5rem; box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2)";
+    suggestionList.classList.add('suggestions');
+    suggestionList.style.cssText = "position: absolute; display: flex; flex-direction: column; list-style: none; ;background: rgb(35, 38, 39); margin-bottom: 0.5rem; z-index: 999; max-height:200px; min-width: 252px; overflow: auto; border: 1px solid #fff; padding: 0rem 0.6rem 0rem 0.5rem; box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2)";
     
+    let mediaQuery = window.matchMedia("(max-width: 468px)");
+
+    function applyStyles() {
+      if (mediaQuery.matches) {
+        suggestionList.style.cssText = "position: absolute; display: flex; flex-direction: column; list-style: none; ;background: rgb(35, 38, 39); margin-bottom: 0.5rem; z-index: 999; max-height:200px; min-width: 295px; overflow: auto; border: 1px solid #fff; padding: 0rem 0.6rem 0rem 0.5rem; box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2)";
+        
+      } else {
+        suggestionList.style.cssText = "position: absolute; display: flex; flex-direction: column; list-style: none; ;background: rgb(35, 38, 39); margin-bottom: 0.5rem; z-index: 999; max-height:200px; min-width: 252px; overflow: auto; border: 1px solid #fff; padding: 0rem 0.6rem 0rem 0.5rem; box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2)";
+        
+      }
+    }
+
+    applyStyles();
+
+    mediaQuery.addListener(applyStyles);
+
     input.addEventListener("input", function() {
     suggestionList.innerHTML = "";
       // Get the user's entered text"
@@ -617,6 +634,20 @@ function getColor() {
     colors.style.cssText = 'display: flex; flex-direction: column; width: 100%; max-width: 1200px; margin: 0 auto; align-items: center';
     
     divColor.style.cssText = `padding: 4rem; background: ${colorSearch.seed.hex.value}; margin: 1rem 1rem 1.5rem; border-radius: 6px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); width: 100%; cursor: pointer`;
+    let mediaQuery = window.matchMedia("(max-width: 468px)");
+    function applyStyles() {
+      if (mediaQuery.matches) {
+        divColor.style.cssText = `padding: 3rem; background: ${colorSearch.seed.hex.value}; margin: 1rem 1rem 1.5rem; border-radius: 6px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); width: 100%; cursor: pointer`;
+        
+      } else {
+        divColor.style.cssText = `padding: 4rem; background: ${colorSearch.seed.hex.value}; margin: 1rem 1rem 1.5rem; border-radius: 6px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); width: 100%; cursor: pointer`;
+        
+      }
+    }
+
+    applyStyles();
+
+    mediaQuery.addListener(applyStyles);
     divColor.innerHTML= ` 
     <p style="text-align: center">${colorSearch.seed[colorCode].value}</p>`;
     divColor.onclick = () => {
@@ -1002,6 +1033,20 @@ function gradients () {
     
     
     const gradientContainer = document.createElement('div');
+    let mediaQuery = window.matchMedia("(max-width: 468px)");
+    function applyStyles() {
+      if (mediaQuery.matches) {
+      gradientContainer.style.padding = '5rem 1rem';
+      } else {
+      gradientContainer.style.padding = '8rem 1rem';
+        
+      }
+    }
+
+    applyStyles();
+
+    mediaQuery.addListener(applyStyles);
+
     generateGradient.addEventListener('click', selectedColorsFunction);
     function selectedColorsFunction () {
         document.addEventListener('copy', copiedToClipboard); 
@@ -1146,6 +1191,20 @@ function gradients () {
           randomGradientDiv.style.cssText = 'width: 100%; max-width:1200px; display: flex; flex-direction: column; align-items: center; margin-top: 1rem; text-align: center';
           randomGradientDiv.innerHTML = '<h2>Random Gradient from Image</h2>'
           const randomGradient = document.createElement('div');
+          let mediaQuery = window.matchMedia("(max-width: 468px)");
+          function applyStyles() {
+            if (mediaQuery.matches) {
+            randomGradient.style.padding = '5rem 1rem';
+            } else {
+            randomGradient.style.padding = '8rem 1rem';
+              
+            }
+          }
+
+          applyStyles();
+
+          mediaQuery.addListener(applyStyles);
+
           randomGradient.classList.add('random-gradient');
           
           const randomGenerate = document.createElement('select');

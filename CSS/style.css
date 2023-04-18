@@ -8,6 +8,7 @@
 
 select, textarea, input {
     touch-action: manipulation;
+    border-radius: 0;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -46,6 +47,7 @@ body {
     border: none;
     outline: none;
     text-align: center;
+    width: 252px
     /* margin-bottom: 1rem; */
 }
 
@@ -346,6 +348,10 @@ form {
         font-size: 18px;
     }
 
+    #all-colors {
+        min-width: 295px;
+    }
+
     .colorcode-input-search {
         display: flex;
         flex-direction: column;
@@ -355,6 +361,10 @@ form {
     #palette-heading {
         font-weight: 500;
         text-align: center;
+    }
+
+    .suggestions {
+        min-width: 295px;
     }
 
     #input-search {
